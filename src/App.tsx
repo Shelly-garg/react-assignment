@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import './css/App.css';
 import { LoggedIn } from './components/loggedIn'; 
 import Login from './components/login';
-import NavBar from './components/navBar';
+import NavBar from './components/navbar';
 import Profile from './components/profile';
 import Search from './components/search';
 import store from './store';

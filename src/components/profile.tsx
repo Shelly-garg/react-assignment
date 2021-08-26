@@ -1,10 +1,19 @@
 import { connect } from 'react-redux';
 import { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 
-import { fetchProfile }  from '../actions/profileActions';
+import { clearError, fetchProfile }  from '../actions/profileActions';
+import { AppState } from '../reducers/rootReducer';
 
 
-class Profile extends Component{
+interface propType{
+  username: string,
+  match?: any,
+  fetchProfile: (username: string) => void,
+  clearError: () => void,
+  profile?: any
+}
+class Profile extends Component<propType>{
   componentDidMount(){
     let username;
     if(this.props.match){
@@ -16,19 +25,27 @@ class Profile extends Component{
     this.props.fetchProfile(username);
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: propType) {
     if (this.props.username !== prevProps.username) {
       this.props.fetchProfile(this.props.username);
     }
   }
-    
+
+  IntervalHandler = (interval: any) => {
+    this.props.clearError();
+    clearInterval(interval);
+  }
   render() {
     const { error, isLoaded, data } = this.props.profile;
     if (error) {
-      return <div>Error: {error.message}</div>;
-    } else if (!isLoaded) {
+      const interval = setInterval(() => {
+        this.IntervalHandler(interval)
+      }, 2000);
+    return <div>Error: {error.message}</div>;
+    }
+    else if (!isLoaded) {
       return <div>Loading...</div>;
-    } else {
+    } else if(data){
       return (
         <div >
             <img src={data.avatar_url} alt='avatar'></img>
@@ -43,18 +60,22 @@ class Profile extends Component{
         </div>
       );
     }
+    else{
+      return <Redirect to='/Search'></Redirect>
+    }
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state: AppState) => {
   return {
     profile: state.profileReducer
   }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch: any) => {
   return {
-    fetchProfile: (username) => dispatch(fetchProfile(username))
+    fetchProfile: (username: string) => dispatch(fetchProfile(username)),
+    clearError: () => dispatch(clearError())
   }
 }
 

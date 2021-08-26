@@ -5,16 +5,16 @@ import {
 } from '../actions/actionTypes';
 
 import { loggedInUserDetails } from '../services/tokenStorage';
+import { UserState, ActionType } from './reducerConstants';
 
-
-const initialState = {
+const initialState: UserState = {
   isLoaded: false,
   error: null,
   token: loggedInUserDetails().token,
   isSuccess: false,
 };
 
-function loginReducer(state = initialState, action) {
+function loginReducer(state = initialState, action: ActionType) {
   switch(action.type){
     case FETCH_LOGIN_BEGIN:
       return {

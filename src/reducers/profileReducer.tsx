@@ -1,17 +1,18 @@
 import {
     FETCH_PROFILE_BEGIN,
     FETCH_PROFILE_SUCCESS,
-    FETCH_PROFILE_FAILURE
+    FETCH_PROFILE_FAILURE,
+    CLEAR_ERROR
   } from '../actions/actionTypes';
-  
+import { ProfileState, ActionType } from './reducerConstants';
 
-const initialState = {
+const initialState: ProfileState = {
   isLoaded: false,
   error: null,
   data: null
 };
 
-function profileReducer(state = initialState, action) {
+function profileReducer(state = initialState, action: ActionType) {
   switch(action.type) {
     case FETCH_PROFILE_BEGIN:
       return {
@@ -21,6 +22,7 @@ function profileReducer(state = initialState, action) {
       };
 
     case FETCH_PROFILE_SUCCESS:
+      console.log(typeof(action.payload))
       return {
         ...state,
         isLoaded: true,
@@ -35,7 +37,11 @@ function profileReducer(state = initialState, action) {
         error: action.payload,
         data:null
       };
-
+    case CLEAR_ERROR:
+      return {
+        ...state,
+        error: null
+      }
     default:
       return state;
   }

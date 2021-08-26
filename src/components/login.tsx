@@ -1,17 +1,24 @@
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router'
 import { useSelector } from 'react-redux';
-
-import { fetchUser } from '../actions/loginActions'
 import { useState } from 'react'
 
+import { AppState } from '../reducers/rootReducer';
+import { fetchUser } from '../actions/loginActions'
+import { UserState } from '../reducers/reducerConstants'
 
-const Login = (props) => {
-    const loginData = useSelector(state => state.loginReducer);
-    const[username, setUsername] = useState();
-    const[token, setToken] = useState();
 
-    const handleSubmit = event => {
+interface detailsType{
+  username: string,
+  token: string
+}
+
+const Login = (props: mapDispatchToPropsType) => {
+    const loginData: UserState = useSelector((state: AppState) => state.loginReducer);
+    const[username, setUsername] = useState<string>();
+    const[token, setToken] = useState<string>();
+
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
       if(!username){
           alert('Please Enter Username')
@@ -22,10 +29,10 @@ const Login = (props) => {
         alert('Please Enter Password')
         return;
       }
-      const data = [
-        username,
-        token
-      ]
+      const data: detailsType = {
+        username: username,
+        token: token,
+      }
       props.fetchUser(data);
     }
 
@@ -35,11 +42,11 @@ const Login = (props) => {
         <form onSubmit={handleSubmit}>
           <label>
             <p>Username:</p>
-            <input type='text' onChange={(e) => setUsername(e.target.value)}/>
+            <input type='text' onChange={(event: any) => setUsername(event.target.value)}/>
           </label>
           <label>
             <p>Password:</p>
-            <input type='password' onChange={(e) => setToken(e.target.value)} />
+            <input type='password' onChange={(event: any) => setToken(event.target.value)} />
           </label>
           <div>
             <button type='submit'>Submit</button>
@@ -50,10 +57,13 @@ const Login = (props) => {
       </div>
     )
 }
+interface mapDispatchToPropsType{
+  fetchUser: (details: detailsType) =>  void
+}
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch: any) => {
   return {
-    fetchUser: (details) => dispatch(fetchUser(details))
+    fetchUser: (details: detailsType) => dispatch(fetchUser(details))
   }
 }
 

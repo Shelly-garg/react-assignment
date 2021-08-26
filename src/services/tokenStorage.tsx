@@ -1,4 +1,4 @@
-export const setUserDetailsCookie = (username,token) => {
+export const setUserDetailsCookie = (username: string,token: string) => {
     window.localStorage.setItem('personal-access-token', token);
     window.localStorage.setItem('username', username);
 }

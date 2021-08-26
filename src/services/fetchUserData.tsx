@@ -1,7 +1,7 @@
 import { FETCH_USER } from '../constants';
 
 
-export const fetchUserData = async(token) => {
+export const fetchUserData = async(token: string) => {
     const response = await fetch(FETCH_USER, { 
         method: 'GET', 
         headers: {
