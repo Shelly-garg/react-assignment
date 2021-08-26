@@ -1,12 +1,14 @@
-import './App.css';
-import {BrowserRouter, Switch ,Route} from "react-router-dom";
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Provider } from 'react-redux';
+
+import './css/App.css';
+import { LoggedIn } from './components/loggedIn'; 
+import Login from './components/login';
+import NavBar from './components/navBar';
 import Profile from './components/profile';
 import Search from './components/search';
-import NavBar from './components/NavBar';
-import {LoggedIn} from './components/loggedIn'; 
-import {Login} from './components/login';
 import store from './store';
-import { Provider } from 'react-redux';
+import { Welcome } from './components/welcome';
 
 
 function App() {
@@ -15,15 +17,14 @@ function App() {
       <BrowserRouter>
         <NavBar/>
         <Switch>
-          <Route exact path="/" component={Search}/>
-          <Route exact path="/login" component={Login}/>
-          <Route exact path="/loggedin" component={LoggedIn}/>
-          <Route exact path="/:username" component={Profile}/>
-          
+          <Route exact path='/search' component={Search}/>
+          <Route exact path='/login' component={Login}/>
+          <Route exact path='/profile' component={LoggedIn}/>
+          <Route exact path='/:username' component={Profile}/>
+          <Route exact path='/' component={Welcome}/>
         </Switch>
       </BrowserRouter>
     </Provider>
-    
   );
 }
 

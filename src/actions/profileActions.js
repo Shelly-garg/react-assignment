@@ -1,6 +1,10 @@
-export const FETCH_PROFILE_BEGIN   = 'FETCH_PROFILE_BEGIN';
-export const FETCH_PROFILE_SUCCESS = 'FETCH_PROFILE_SUCCESS';
-export const FETCH_PROFILE_FAILURE = 'FETCH_PROFILE_FAILURE';
+import { 
+  FETCH_PROFILE_BEGIN, 
+  FETCH_PROFILE_FAILURE, 
+  FETCH_PROFILE_SUCCESS
+} from './actionTypes'
+import { fetchProfileData } from '../services/fetchProfileData';
+
 
 export const fetchProfileBegin = () => ({
   type: FETCH_PROFILE_BEGIN
@@ -16,24 +20,15 @@ export const fetchProfileFailure = data => ({
   payload: data
 });
 
-
-const baseUrl='https://api.github.com/users/'
-
-export const fetchProfile= (username) =>{
-    return async dispatch=>{
-        dispatch(fetchProfileBegin());
-        const response= await fetch(baseUrl+ username);
-        const data= await response.json();
-        if(response.ok){
-            dispatch(fetchProfileSuccess(data));
-            return ;
-        }
-
-        else{
-          console.log(data);
-            dispatch(fetchProfileFailure(data));
-            return;
-        }
-    }
-
+export const fetchProfile = (username) => async(dispatch) => {
+  dispatch(fetchProfileBegin());
+  const profile = await fetchProfileData(username);
+  if(profile.statusCode === 200){
+      dispatch(fetchProfileSuccess(profile.data));
+      return ;
+  }
+  else{
+      dispatch(fetchProfileFailure(profile.data));
+      return;
+  }
 }

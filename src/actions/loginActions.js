@@ -1,8 +1,12 @@
-import { storeLoggedInUSer } from "../services/tokenStorage";
+import { 
+  FETCH_LOGIN_BEGIN, 
+  FETCH_LOGIN_SUCCESS, 
+  FETCH_LOGIN_FAILURE 
+} from './actionTypes';
+import { fetchUserData } from '../services/fetchUserData';
+import { setUserDetailsCookie } from '../services/tokenStorage';
+import { USERNAME_DO_NOT_PASSWORD } from '../constants';
 
-export const FETCH_LOGIN_BEGIN   = 'FETCH_LOGIN_BEGIN';
-export const FETCH_LOGIN_SUCCESS = 'FETCH_LOGIN_SUCCESS';
-export const FETCH_LOGIN_FAILURE = 'FETCH_lOGIN_FAILURE';
 
 export const fetchLoginBegin = () => ({
   type: FETCH_LOGIN_BEGIN
@@ -18,36 +22,21 @@ export const fetchLoginFailure = data => ({
   payload: data
 });
 
-
-const loginURL='https://api.github.com/user'
-
-export const fetchLogin= (username, password) =>{
-    return async dispatch=>{
+export const fetchUser = (details) => async(dispatch) => {
         dispatch(fetchLoginBegin());
-        const response = await fetch(loginURL, { 
-            method: 'GET', 
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Token ${password}`
-            },
-        });
-        const data= await response.json();
-        if(response.ok){
-            if(data.login===username){
-                storeLoggedInUSer(username,password); 
+        let username = details.username;
+        let password = details.token;
+        const response = await fetchUserData(password);
+        if(response.statusCode === 200){
+            if(response.data.login === username){
+                setUserDetailsCookie(username,password); 
                 dispatch(fetchLoginSuccess(password));
             }
             else{
-                dispatch(fetchLoginFailure("Username do not match password"));
+                dispatch(fetchLoginFailure(USERNAME_DO_NOT_PASSWORD));
             }
-            return ;
         }
-
         else{
-          console.log(data);
-            dispatch(fetchLoginFailure(data.message));
-            return;
+            dispatch(fetchLoginFailure(response.data.message));
         }
-    }
-
 }

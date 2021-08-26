@@ -1,11 +1,11 @@
-export const storeLoggedInUSer = (username,token) => {
-    window.localStorage.setItem("access-Token", token);
-    window.localStorage.setItem("loggedin-user", username);
+export const setUserDetailsCookie = (username,token) => {
+    window.localStorage.setItem('personal-access-token', token);
+    window.localStorage.setItem('username', username);
 }
 
-export const getLoggedInUser = () =>{
+export const loggedInUserDetails = () => {
     return {
-        "token" : window.localStorage.getItem("access-token"),
-        "username" : window.localStorage.getItem('loggedin-user'), 
+        'token': window.localStorage.getItem('personal-access-token'),
+        'username': window.localStorage.getItem('username'), 
     }
 }
