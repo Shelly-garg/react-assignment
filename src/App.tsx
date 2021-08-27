@@ -9,6 +9,7 @@ import Profile from './components/profile';
 import Search from './components/search';
 import store from './store';
 import { Welcome } from './components/welcome';
+import WhoToFollow from './components/follow'
 
 
 function App() {

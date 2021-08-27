@@ -1,4 +1,5 @@
 import Profile from './profile';
+import WhoToFollow from './follow'
 import { loggedInUserDetails } from '../services/tokenStorage';
 
 
@@ -11,7 +12,10 @@ export const LoggedIn = () => {
     const userData: userDetail = loggedInUserDetails();
     if(userData.username){
         return(
-            <Profile username={userData.username}/>
+            <div>
+                <Profile username={userData.username}/>
+                <WhoToFollow></WhoToFollow>
+            </div>
           )
     }
     return(
