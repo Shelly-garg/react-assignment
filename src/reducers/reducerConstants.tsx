@@ -19,5 +19,5 @@ export interface ProfileState {
 export interface FollowState {
     isLoaded: boolean,
     error: string|null,
-    data: string[]|null,
+    data: [],
 }

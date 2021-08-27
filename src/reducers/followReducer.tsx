@@ -9,7 +9,7 @@ import { FollowState, ActionType } from './reducerConstants';
 const initialState: FollowState = {
   isLoaded: false,
   error: null,
-  data: null
+  data: []
 };
 
 function followReducer(state = initialState, action: ActionType) {
@@ -22,7 +22,6 @@ function followReducer(state = initialState, action: ActionType) {
       };
 
     case FETCH_USERLIST_SUCCESS:
-      console.log(typeof(action.payload))
       return {
         ...state,
         isLoaded: true,
@@ -35,7 +34,7 @@ function followReducer(state = initialState, action: ActionType) {
         ...state,
         isLoaded: true,
         error: action.payload,
-        data:null
+        data:[],
       };
     default:
       return state;
