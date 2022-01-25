@@ -14,6 +14,7 @@ interface propType{
   profile?: any
 }
 class Profile extends Component<propType>{
+
   componentDidMount(){
     let username;
     if(this.props.match){
@@ -41,7 +42,7 @@ class Profile extends Component<propType>{
       const interval = setInterval(() => {
         this.IntervalHandler(interval)
       }, 2000);
-    return <div>Error: {error.message}</div>;
+    return <h2>{error.message}</h2>;
     }
     else if (!isLoaded) {
       return <div>Loading...</div>;

@@ -42,11 +42,11 @@ const Login = (props: mapDispatchToPropsType) => {
         <form onSubmit={handleSubmit}>
           <label>
             <p>Username:</p>
-            <input type='text' onChange={(event: any) => setUsername(event.target.value)}/>
+            <input type='text' onChange={(event) => setUsername(event.target.value)}/>
           </label>
           <label>
             <p>Password:</p>
-            <input type='password' onChange={(event: any) => setToken(event.target.value)} />
+            <input type='password' onChange={(event) => setToken(event.target.value)} />
           </label>
           <div>
             <button type='submit'>Submit</button>
@@ -67,4 +67,4 @@ const mapDispatchToProps = (dispatch: any) => {
   }
 }
 
-export default connect(null,mapDispatchToProps)(Login);
+export default connect(null, mapDispatchToProps)(Login);

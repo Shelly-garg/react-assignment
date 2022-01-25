@@ -1,7 +1,6 @@
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
-import './css/App.css';
 import { LoggedIn } from './components/loggedIn'; 
 import Login from './components/login';
 import NavBar from './components/navbar';

@@ -22,7 +22,6 @@ function profileReducer(state = initialState, action: ActionType) {
       };
 
     case FETCH_PROFILE_SUCCESS:
-      console.log(typeof(action.payload))
       return {
         ...state,
         isLoaded: true,

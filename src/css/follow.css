@@ -1,0 +1,7 @@
+.who-to-follow-list{
+    display: flex;
+    width: 20rem;
+    height: 4rem;
+    align-items: center;
+    justify-content: space-between;
+}
